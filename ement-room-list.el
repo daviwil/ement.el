@@ -616,7 +616,8 @@ DISPLAY-BUFFER-ACTION is nil, the buffer is not displayed."
       (unless ement-sessions
         (error "Ement: Not connected.  Use `ement-connect' to connect"))
       (with-current-buffer (get-buffer-create buffer-name)
-        (ement-room-list-mode)
+        (unless (eq 'ement-room-list-mode major-mode)
+          (ement-room-list-mode))
         (let* ((room-session-vectors
                 (cl-loop for (_id . session) in ement-sessions
                          append (cl-loop for room in (ement-session-rooms session)
